@@ -1,0 +1,12 @@
+cloud-sql-python-connector
+fastapi[standard]
+google-cloud-secret-manager
+groq
+langchain-core
+langchain_groq
+pydantic
+pymysql
+PyYAML
+SQLAlchemy
+setuptools
+uvicorn
