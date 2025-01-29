@@ -1,0 +1,26 @@
+name: Trivy Scan
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https ca-certificates gnupg
+          wget -qO - https://dl.aquasec.com/deb/ubuntu/gpg | sudo apt-key add -
+          echo "deb https://dl.aquasec.com/deb/ubuntu $(lsb_release -sc) stable" | sudo tee /etc/apt/sources.list.d/aquasec.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Scan Dockerfile
+        run: |
+          trivy image --format table --output report.txt --quiet $(docker build -q .)
