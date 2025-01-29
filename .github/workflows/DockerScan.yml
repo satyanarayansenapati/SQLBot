@@ -15,11 +15,11 @@ jobs:
       - name: Install Trivy
         run: |
           sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates gnupg
-          wget -qO - https://dl.aquasec.com/deb/ubuntu/gpg | sudo apt-key add -
-          echo "deb https://dl.aquasec.com/deb/ubuntu $(lsb_release -sc) stable" | sudo tee /etc/apt/sources.list.d/aquasec.list
+          sudo apt-get install wget gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
-          sudo apt-get install -y trivy
+          sudo apt-get install trivy
 
       - name: Scan Dockerfile
         run: |
