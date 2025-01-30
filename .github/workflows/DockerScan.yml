@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Trivy Scan
         run: |
-          trivy image sqlbot:1.0 --format text > report.txt
+          trivy image sqlbot:1.0 > report.txt
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
