@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        
+      - name: Build Docker Image
+        run: |
+          docker build -t sqlbot:1.0 .
 
       - name: Install Trivy
         run: |
@@ -21,6 +25,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install trivy
 
-      - name: Scan Dockerfile
+      - name: Run Trivy Scan
         run: |
-          trivy image --format table --output report.txt --quiet $(docker build -q .)
+          trivy image sqlbot:1.0 --format text > report.txt
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-report
+          path: report.txt
