@@ -7,6 +7,9 @@ WORKDIR /app
 # copying the requirement file
 COPY requirements.txt requirements.txt
 
+# updating the package index and upgrading libraries
+RUN apk update && apk upgrade --no-cache libcrypto3 libssl3
+
 # installing the packages
 RUN pip install  --no-cache-dir -r requirements.txt
 
