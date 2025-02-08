@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       image_name:
-        description: 'sqlbot'
+        description: 'Name of the Docker image (e.g., my-app)'
         required: true
       image_tag:
-        description: '1.0.0'
+        description: 'Tag for the Docker image (e.g., latest, v1.0.0)'
         required: true
 
 jobs:
