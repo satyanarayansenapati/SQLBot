@@ -46,7 +46,7 @@ jobs:
 
       - name: Image digest
         id: image_digest
-        uses: docker/metadata-action@v4
+        uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c 
         with:
           images: ${{ secrets.DOCKER_REPO }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
