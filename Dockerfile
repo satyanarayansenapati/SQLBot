@@ -1,5 +1,5 @@
 # Stage 1: Build the application environment
-FROM cgr.dev/chainguard/python:latest
+FROM python:3.12.9-alpine3.21
 
 # setting up working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 
 # installing the packages
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install  --no-cache-dir -r requirements.txt
 
 # copying the files to the working directory
 COPY . .
