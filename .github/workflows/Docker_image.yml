@@ -38,7 +38,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REPO }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
           build-args: |
             VERSION=${{ github.sha }}  # Still include commit SHA as a build arg if needed
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -48,7 +48,7 @@ jobs:
         id: image_digest
         uses: tj-actions/changed-files@c65cd883420fd2eb864698a825fc4162dd94482c 
         with:
-          images: ${{ secrets.DOCKER_REPO }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          images: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
       - name: Print image digest
         run: |
