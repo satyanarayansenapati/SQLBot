@@ -1,9 +1,14 @@
-# this workflow file builds and pushes the docker image to docker hub repository
-
-name: Docker Image Build and Push
+name: Docker Image Build and Push to Dockerhub
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: 'sqlbot'
+        required: true
+      image_tag:
+        description: '1.0.0'
+        required: true
 
 jobs:
   build-and-push:
@@ -30,12 +35,12 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .  # Build from the root of the repository
-          file: ./Dockerfile # Path to your Dockerfile (adjust if needed)
+          context: .
+          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REPO }}:${{ github.sha }}  # Tag with commit SHA
-          build-args: | # Optional build arguments
-            VERSION=${{ github.sha }}
+          tags: ${{ secrets.DOCKER_REPO }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
+          build-args: |
+            VERSION=${{ github.sha }}  # Still include commit SHA as a build arg if needed
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
@@ -43,7 +48,7 @@ jobs:
         id: image_digest
         uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
+          images: ${{ secrets.DOCKER_REPO }}/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}
 
       - name: Print image digest
         run: |
