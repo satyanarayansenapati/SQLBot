@@ -1,5 +1,5 @@
 # Stage 1: Build the application environment
-FROM python:alpine3.21 
+FROM cgr.dev/chainguard/python:latest
 
 # setting up working directory
 WORKDIR /app
