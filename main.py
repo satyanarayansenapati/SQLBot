@@ -14,12 +14,12 @@ async def sqlbot(question: str):
         response = await SQLBot.process_question(question)  # Assuming asynchronous processing
         log.info("Answer delivered" )
         if response.answer is None:
-            return {"status" : status.HTTP_204_NO_CONTENT, "Answer" : "ERROR !! Please contanct customer support"}
-        return {"status" : status.HTTP_200_OK, "Answer" : response} 
+            return {"status" : "Ops!! I ran into problem."}
+        return {"Answer" : response} 
  
     except Exception as e:
         log.error(f"SERVER | Error: {e}\n\n\n")  # Log the error using the logger object
-        return {"status" : status.HTTP_500_INTERNAL_SERVER_ERROR, "Error" : e}  # Return an error response with status code 500
+        return {"status" : "Error!! Please contanct the support team."}  # Return an error response with status code 500
     
 
 @app.get("/")
